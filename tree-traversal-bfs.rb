@@ -24,16 +24,20 @@ class Queue
   end
 
   def breadth(node, value)
-    return "value not found" if node.nil?
-    node.children.each do |child|
-      enqueue(child)
-      return "found the value" if child.payload == value
+    enqueue(node)
+    until @queue.empty?
+      current_node = dequeue
+      if current_node.payload == value
+        return current_node
+      else
+        current_node.children.each {|child| enqueue(child)}
+      end
     end
-    current_node = dequeue
-    breadth(current_node, value)
   end
+   
 end
 
+  
 # The "Leafs" of a tree, elements that have no children
 fifth_node    = Tree.new(5, [])
 eleventh_node = Tree.new(11, [])

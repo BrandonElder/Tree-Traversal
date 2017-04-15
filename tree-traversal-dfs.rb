@@ -8,15 +8,23 @@ class Tree
     @payload = payload
     @children = children
   end
+
+  def to_s
+    "node #{payload}"
+  end
 end
 
 def depth(node, value)
-  return value if node.payload == value
+  return node if node.payload == value
   node.children.each do |child|
-    depth(child, value)
+    val = depth(child, value)
+    if val != "not found"
+      return val
+    end
   end
-  return nil
+  return "not found"
 end
+
 
 # The "Leafs" of a tree, elements that have no children
 deep_fifth_node = Tree.new(5, [])
@@ -32,4 +40,5 @@ shallow_fifth_node = Tree.new(5, [ninth_node])
 # The "Trunk" of the tree
 trunk = Tree.new(2, [seventh_node, shallow_fifth_node])
 
-puts depth(eleventh_node, 11)
+puts depth(trunk, 11)
+puts depth(trunk, 17)
